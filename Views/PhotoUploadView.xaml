@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ViewModels="clr-namespace:OCRApplication.ViewModels"
+             x:Class="OCRApplication.Views.PhotoUploadView"
+             Title="OCR Test Application">
+
+    <ContentPage.BindingContext>
+        <ViewModels:PhotoUploadViewModel />
+    </ContentPage.BindingContext>
+
+    <!--<Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" IsEnabled="False" />
+    </Shell.BackButtonBehavior>
+    <Shell.TabBarIsVisible>false</Shell.TabBarIsVisible>
+    <Shell.NavBarIsVisible>false</Shell.NavBarIsVisible>-->
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label 
+                Grid.Row="0"
+                Text="Choose Your File."
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+        <Button Grid.Row="1" Text="Upload File" TextColor="White" BackgroundColor="#3A7DFF" 
+                    VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" Margin="10" HeightRequest="50" 
+                    FontSize="20" FontAttributes="Bold" Command="{Binding PhotoUploadCommand}"
+                    x:Name="uploadButton" x:FieldModifier="public" Pressed="OnButtonPressed" Released="OnButtonReleased"/>
+
+        <ScrollView Grid.Row="2">
+            <CollectionView ItemsSource="{Binding Image}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <Label VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"
+                                       Text="{Binding ImageName, StringFormat='{0}'}" Margin="5" />
+                            <Border StrokeThickness="3">
+                                <Image Source="{Binding ImageUrl}" VerticalOptions="Center" HorizontalOptions="Center" Margin="5">
+                                </Image>
+                            </Border>
+                            <Label VerticalOptions="CenterAndExpand" HorizontalOptions="Start"
+                                   Text="{Binding Success, StringFormat='Success: {0}'}" 
+                                   Margin="5"/>
+                            <Label VerticalOptions="CenterAndExpand" HorizontalOptions="Start"
+                                   Text="{Binding AllText, StringFormat='AllText: {0}'}"
+                                   Margin="5"/>
+                            <Label VerticalOptions="CenterAndExpand" HorizontalOptions="Start"
+                                   Text="{Binding Elements, StringFormat='Elements: &#x0a;{0}'}"
+                                   Margin="5" />
+                            <Label VerticalOptions="CenterAndExpand" HorizontalOptions="Start"
+                                   Text="{Binding Lines, StringFormat='Lines: &#x0a;{0}'}" 
+                                   Margin="5"/>
+                            
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+    </Grid>
+</ContentPage>
